@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block title %}Rental Agreement - {{ agreement.property.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Rental Agreement</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Agreement Status -->
+                    <div class="alert {% if agreement.status == 'approved' %}alert-success
+                                    {% elif agreement.status == 'rejected' %}alert-danger
+                                    {% else %}alert-warning{% endif %} mb-4">
+                        <h5 class="alert-heading">Agreement Status: {{ agreement.get_status_display }}</h5>
+                        <p class="mb-0">
+                            {% if agreement.status == 'pending' %}
+                                This agreement is pending signatures from all parties.
+                            {% elif agreement.status == 'approved' %}
+                                This agreement has been fully signed and approved.
+                            {% else %}
+                                This agreement has been rejected.
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <!-- Property Details -->
+                    <div class="mb-4">
+                        <h4>Property Details</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Property:</strong> {{ agreement.property.title }}</p>
+                                <p><strong>Location:</strong> {{ agreement.property.city }}, {{ agreement.property.state }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Monthly Rent:</strong> ${{ agreement.monthly_rent }}</p>
+                                <p><strong>Security Deposit:</strong> ${{ agreement.security_deposit }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rental Period -->
+                    <div class="mb-4">
+                        <h4>Rental Period</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Start Date:</strong> {{ agreement.start_date }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>End Date:</strong> {{ agreement.end_date }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="mb-4">
+                        <h4>Terms and Conditions</h4>
+                        <div class="p-3 bg-light rounded">
+                            {{ agreement.terms_and_conditions|linebreaks }}
+                        </div>
+                    </div>
+
+                    <!-- Signatures -->
+                    <div class="mb-4">
+                        <h4>Signatures</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="border p-3 rounded">
+                                    <h6>Tenant</h6>
+                                    {% if agreement.signed_by_tenant %}
+                                        <p class="text-success">
+                                            <i class="fas fa-check-circle"></i> Signed on {{ agreement.tenant_signature_date|date:"F j, Y" }}
+                                        </p>
+                                    {% else %}
+                                        <p class="text-muted">Not signed yet</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border p-3 rounded">
+                                    <h6>Property Owner</h6>
+                                    {% if agreement.signed_by_owner %}
+                                        <p class="text-success">
+                                            <i class="fas fa-check-circle"></i> Signed on {{ agreement.owner_signature_date|date:"F j, Y" }}
+                                        </p>
+                                    {% else %}
+                                        <p class="text-muted">Not signed yet</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border p-3 rounded">
+                                    <h6>Admin</h6>
+                                    {% if agreement.signed_by_admin %}
+                                        <p class="text-success">
+                                            <i class="fas fa-check-circle"></i> Signed on {{ agreement.admin_signature_date|date:"F j, Y" }}
+                                        </p>
+                                    {% else %}
+                                        <p class="text-muted">Not signed yet</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Notes -->
+                    {% if agreement.admin_notes %}
+                    <div class="mb-4">
+                        <h4>Admin Notes</h4>
+                        <div class="p-3 bg-light rounded">
+                            {{ agreement.admin_notes|linebreaks }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Sign Agreement Form -->
+                    {% if can_sign %}
+                    <div class="mt-4">
+                        <form method="post" action="{% url 'sign_agreement' agreement.id %}">
+                            {% csrf_token %}
+                            {% if user.is_staff %}
+                            <div class="mb-3">
+                                <label for="admin_notes" class="form-label">Admin Notes (Optional)</label>
+                                <textarea class="form-control" id="admin_notes" name="admin_notes" rows="3"></textarea>
+                            </div>
+                            {% endif %}
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-signature me-2"></i>Sign Agreement
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+
+                    <!-- Navigation Buttons -->
+                    <div class="mt-4">
+                        {% if user == agreement.tenant %}
+                        <a href="{% url 'my_bookings' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to My Bookings
+                        </a>
+                        {% elif user == agreement.owner %}
+                        <a href="{% url 'owner_dashboard' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                        </a>
+                        {% elif user.is_staff %}
+                        <a href="{% url 'admin_agreements' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Agreements List
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0;
+}
+
+.border {
+    border-radius: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+}
+</style>
+{% endblock %} 

@@ -6,8 +6,8 @@ class Property(models.Model):
     PROPERTY_TYPES = [
         ('house', 'House'),
         ('apartment', 'Apartment'),
-        ('condo', 'Condo'),
-        ('villa', 'Villa'),
+        ('condo', 'Condominium'),
+        ('townhouse', 'Townhouse'),
     ]
 
     title = models.CharField(max_length=200)
@@ -26,6 +26,7 @@ class Property(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='properties')
+    terms_and_conditions = models.TextField(blank=True, help_text="Terms and conditions for renting this property")
 
     def __str__(self):
         return self.title

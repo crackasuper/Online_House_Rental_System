@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Rental Agreements - Admin{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Manage Rental Agreements</h1>
+    </div>
+
+    {% if agreements %}
+    <div class="row">
+        {% for agreement in agreements %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">{{ agreement.property.title }}</h5>
+                    <span class="badge {% if agreement.status == 'pending' %}bg-warning
+                                    {% elif agreement.status == 'approved' %}bg-success
+                                    {% else %}bg-danger{% endif %}">
+                        {{ agreement.get_status_display }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <p><strong>Tenant:</strong> {{ agreement.tenant.get_full_name }}</p>
+                        <p><strong>Owner:</strong> {{ agreement.owner.get_full_name }}</p>
+                        <p><strong>Period:</strong> {{ agreement.start_date }} to {{ agreement.end_date }}</p>
+                        <p><strong>Monthly Rent:</strong> ${{ agreement.monthly_rent }}</p>
+                    </div>
+
+                    <div class="signature-status mb-3">
+                        <h6>Signature Status:</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p class="mb-1">
+                                    <i class="fas {% if agreement.signed_by_tenant %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %}"></i>
+                                    Tenant
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="mb-1">
+                                    <i class="fas {% if agreement.signed_by_owner %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %}"></i>
+                                    Owner
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="mb-1">
+                                    <i class="fas {% if agreement.signed_by_admin %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %}"></i>
+                                    Admin
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if agreement.admin_notes %}
+                    <div class="alert alert-info">
+                        <strong>Admin Notes:</strong><br>
+                        {{ agreement.admin_notes }}
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-3">
+                        <a href="{% url 'view_agreement' agreement.id %}" class="btn btn-primary">
+                            <i class="fas fa-eye me-2"></i>View Details
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <small>
+                        <i class="fas fa-calendar-alt me-2"></i>Created on {{ agreement.created_at|date:"F j, Y" }}
+                        {% if agreement.updated_at != agreement.created_at %}
+                        <br><i class="fas fa-edit me-2"></i>Last updated on {{ agreement.updated_at|date:"F j, Y" }}
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>No rental agreements found.
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.badge {
+    padding: 8px 12px;
+    font-weight: 500;
+}
+
+.signature-status {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.btn {
+    padding: 8px 16px;
+}
+
+.card-footer {
+    background-color: #fff;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %} 
