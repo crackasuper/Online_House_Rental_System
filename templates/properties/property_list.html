@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Properties - Online House Rental System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Filters Sidebar -->
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Filters</h5>
+                <form method="get" action="{% url 'property_list' %}">
+                    <div class="mb-3">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" name="city" value="{{ request.GET.city }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="property_type" class="form-label">Property Type</label>
+                        <select class="form-select" id="property_type" name="property_type">
+                            <option value="">All Types</option>
+                            {% for type_code, type_name in property_types %}
+                                <option value="{{ type_code }}" {% if request.GET.property_type == type_code %}selected{% endif %}>
+                                    {{ type_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="min_price" class="form-label">Min Price</label>
+                        <input type="number" class="form-control" id="min_price" name="min_price" value="{{ request.GET.min_price }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="max_price" class="form-label">Max Price</label>
+                        <input type="number" class="form-control" id="max_price" name="max_price" value="{{ request.GET.max_price }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="bedrooms" class="form-label">Bedrooms</label>
+                        <select class="form-select" id="bedrooms" name="bedrooms">
+                            <option value="">Any</option>
+                            <option value="1" {% if request.GET.bedrooms == '1' %}selected{% endif %}>1+</option>
+                            <option value="2" {% if request.GET.bedrooms == '2' %}selected{% endif %}>2+</option>
+                            <option value="3" {% if request.GET.bedrooms == '3' %}selected{% endif %}>3+</option>
+                            <option value="4" {% if request.GET.bedrooms == '4' %}selected{% endif %}>4+</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Property Listings -->
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Available Properties</h2>
+            <span class="text-muted">{{ properties|length }} properties found</span>
+        </div>
+        
+        <div class="row">
+            {% for property in properties %}
+            <div class="col-md-6 mb-4">
+                <div class="card property-card h-100">
+                    {% if property.images.exists %}
+                        <img src="{{ property.images.first.image.url }}" class="card-img-top" alt="{{ property.title }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No image available">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ property.title }}</h5>
+                        <p class="card-text text-muted">
+                            <i class="fas fa-map-marker-alt"></i> {{ property.city }}, {{ property.state }}
+                        </p>
+                        <p class="card-text">
+                            <i class="fas fa-bed"></i> {{ property.bedrooms }} beds |
+                            <i class="fas fa-bath"></i> {{ property.bathrooms }} baths |
+                            <i class="fas fa-ruler-combined"></i> {{ property.area }} sq ft
+                        </p>
+                        <p class="card-text">
+                            <strong>${{ property.price }}/month</strong>
+                        </p>
+                        <a href="{% url 'property_detail' property.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No properties found matching your criteria. Try adjusting your filters.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

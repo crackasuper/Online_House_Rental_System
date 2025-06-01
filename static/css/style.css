@@ -1,0 +1,207 @@
+/* Custom styles for the Online House Rental System */
+
+/* Global Styles */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-gray: #f8f9fa;
+    --dark-gray: #343a40;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Auth Pages */
+.auth-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.auth-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.auth-image {
+    background-size: cover;
+    background-position: center;
+    min-height: 400px;
+    position: relative;
+}
+
+.auth-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+}
+
+.auth-form {
+    padding: 2rem;
+}
+
+.auth-form h1 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #dee2e6;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+/* Property Cards */
+.property-card {
+    transition: transform 0.3s ease;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.property-card:hover {
+    transform: translateY(-5px);
+}
+
+.property-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.property-card .card-body {
+    padding: 1.5rem;
+}
+
+.property-card .card-title {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+}
+
+/* Property Detail Page */
+.property-gallery {
+    margin-bottom: 30px;
+}
+
+.property-gallery .carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.amenity-icon {
+    color: #28a745;
+    margin-right: 5px;
+}
+
+/* Booking Form */
+.booking-form {
+    position: sticky;
+    top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .auth-image {
+        min-height: 300px;
+    }
+    
+    .auth-form {
+        padding: 1.5rem;
+    }
+    
+    .property-card .card-img-top {
+        height: 150px;
+    }
+    
+    .property-gallery .carousel-item img {
+        height: 300px;
+    }
+}
+
+/* Status Badges */
+.badge {
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 3rem 0;
+    margin-top: 4rem;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Alerts */
+.alert {
+    margin-bottom: 1rem;
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+} 

@@ -1,0 +1,49 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="auth-image" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');">
+                    <div class="position-absolute bottom-0 start-0 p-4 text-white">
+                        <h2 class="display-4 fw-bold">Welcome Back!</h2>
+                        <p class="lead">Find your perfect home with us</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="auth-form">
+                    <h1 class="text-center mb-4">{% trans "Sign In" %}</h1>
+                    
+                    <form class="login" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <a class="text-decoration-none" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <p class="text-center mb-0">
+                            {% blocktrans %}Don't have an account? <a href="{{ signup_url }}" class="text-decoration-none">Sign up</a>{% endblocktrans %}
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Owner Dashboard - Online House Rental System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Property Owner Dashboard</h2>
+                <a href="{% url 'add_property' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Property
+                </a>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Properties</h5>
+                            <h2 class="card-text">{{ total_properties }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Available Properties</h5>
+                            <h2 class="card-text">{{ available_properties }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties List -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">My Properties</h4>
+                </div>
+                <div class="card-body">
+                    {% if properties %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for property in properties %}
+                                        <tr>
+                                            <td>{{ property.title }}</td>
+                                            <td>{{ property.get_property_type_display }}</td>
+                                            <td>${{ property.price }}</td>
+                                            <td>
+                                                {% if property.is_available %}
+                                                    <span class="badge bg-success">Available</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">Not Available</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'property_detail' property.pk %}" class="btn btn-sm btn-info">
+                                                    <i class="fas fa-eye"></i> View
+                                                </a>
+                                                <a href="{% url 'edit_property' property.pk %}" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-muted mb-0">You haven't added any properties yet.</p>
+                            <a href="{% url 'add_property' %}" class="btn btn-primary mt-3">
+                                <i class="fas fa-plus"></i> Add Your First Property
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

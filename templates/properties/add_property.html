@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Add New Property</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field.errors }}
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+                        <div class="mb-3">
+                            <label class="form-label">Property Images</label>
+                            <input type="file" name="images" multiple class="form-control" accept="image/*">
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Add Property</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
