@@ -183,7 +183,7 @@ ACCOUNT_FORMS = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'your_cloud_name',
-    'API_KEY': 'your_api_key',
-    'API_SECRET': 'your_api_secret',
+    'CLOUD_NAME': 'dsymm8f3i',
+    'API_KEY': '619763351227541',
+    'API_SECRET': 'lF7ReOM04ZXlE1i4qjBs3xl5cyA',
 }
