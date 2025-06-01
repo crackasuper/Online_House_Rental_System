@@ -4,3 +4,4 @@ django-crispy-forms==2.1
 crispy-bootstrap5==2024.2
 python-dotenv==1.0.1
 django-allauth==0.61.1 
+gunicorn==23.0.0
