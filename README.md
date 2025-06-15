@@ -14,9 +14,11 @@ A web-based platform for house rentals built with Django, JavaScript, Bootstrap,
 
   
 ## Screenshots for
--Tenants Booking
--Properties and filtering
--![image alt](https://github.com/crackasuper/Online_House_Rental_System/blob/cc88e02c6a4049c5b124cff5c9b1713de752b69c/127.0.0.1_8000_properties_%20(2).png)
+
+
+- Tenants Booking
+- Properties and filtering
+- ![image alt](https://github.com/crackasuper/Online_House_Rental_System/blob/58e920cf2e784fd8d09fa603db15d686eb0616f3/127.0.0.1_8000_property_1_.png)
 
 ## Setup Instructions
 
