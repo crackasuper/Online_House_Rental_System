@@ -12,7 +12,9 @@ A web-based platform for house rentals built with Django, JavaScript, Bootstrap,
 - Admin Panel
 - Responsive Design
 - Tenants Bookings
+  
 ##Screenshots for
+-Tenants Booking
 
 ## Setup Instructions
 
