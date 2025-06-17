@@ -1,16 +1,28 @@
 # Online House Rental System
 
-A web-based platform for house rentals built with Django, JavaScript, Bootstrap, HTML, and CSS.
+A full-stack Django-based web application for renting, listing, and managing houses. Built with Python, Django, JavaScript, and HTML/CSS, this system streamlines the process of connecting landlords with tenants.
 
-## Features
 
-- User Authentication (Sign up, Login, Logout)
-- Property Listings
-- Property Search and Filtering
-- Property Booking System
-- User Dashboard
-- Admin Panel
+## 🚀 Features
+
+- 🧾 User registration and authentication
+- 🏘️ Landlords can post property listings
+- 🔍 Tenants can browse/search/filter available rentals
+- 📄 Admin approval system for listings
+- 🧠 Smart dashboard for landlords and admins
 - Responsive Design
+
+---
+
+## 🛠️ Tech Stack
+
+![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript)
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3)
+
+---
 
   
 ## Screenshots for
@@ -69,11 +81,4 @@ python manage.py runserver
 - `templates/` - HTML templates
 - `media/` - User-uploaded files
 
-## Technologies Used
 
-- Django 5.0.2
-- Bootstrap 5
-- JavaScript
-- HTML5
-- CSS3
-- SQLite (Development) / PostgreSQL (Production) 
